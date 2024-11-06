@@ -11,3 +11,5 @@ export const API_OPTIONS = {
     Authorization: process.env.REACT_APP_TMDB_BEARER_TOKEN,
   },
 };
+
+export const IMG_CDN_URL = "https://image.tmdb.org/t/p/original";
