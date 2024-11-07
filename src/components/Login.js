@@ -91,7 +91,7 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="absolute w-screen">
+      <div name="viewport" content="width=device" className="absolute width">
         <img src={BG_URL} alt="logo" />
       </div>
       <form
