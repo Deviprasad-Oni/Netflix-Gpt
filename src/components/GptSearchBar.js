@@ -1,10 +1,9 @@
 import React, { useRef } from "react";
 import lang from "../utils/languageConstants";
 import { useDispatch, useSelector } from "react-redux";
-import openai from "../utils/openai";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
-import OpenAI from "openai";
+
 const GptSearchBar = () => {
   const dispatch = useDispatch();
   const langKey = useSelector((store) => store.config.lang);
@@ -31,7 +30,6 @@ const GptSearchBar = () => {
       searchText.current.value +
       ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar,Sholay, Don, Golmaal, Koi Mil Gaya";
 
-    const baseURL = "https://api.aimlapi.com/v1";
     const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
     let gptResults;

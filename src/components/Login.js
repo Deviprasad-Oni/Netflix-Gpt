@@ -74,6 +74,7 @@ const Login = () => {
       )
         .then((userCredential) => {
           // Signed in
+          // eslint-disable-next-line
           const user = userCredential.user;
         })
         .catch((error) => {

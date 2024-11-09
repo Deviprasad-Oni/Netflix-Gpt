@@ -42,6 +42,7 @@ const Header = () => {
     });
     // unSubscribe when component unmounts
     return () => unsusbcribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleGptSearchClick = () => {
