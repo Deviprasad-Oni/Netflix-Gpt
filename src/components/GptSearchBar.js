@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import openai from "../utils/openai";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
-
+import OpenAI from "openai";
 const GptSearchBar = () => {
   const dispatch = useDispatch();
   const langKey = useSelector((store) => store.config.lang);
@@ -31,23 +31,36 @@ const GptSearchBar = () => {
       searchText.current.value +
       ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar,Sholay, Don, Golmaal, Koi Mil Gaya";
 
-    // const gptResults = await openai.chat.completions.create({
-    //   messages: [{ role: "user", content: gptQuery }],
-    //   model: "gpt-3.5-turbo",
-    // });
-    // if (!gptResults.choices) {
-    //   //TODO : Write Error Handling
-    // }
+    const baseURL = "https://api.aimlapi.com/v1";
+    const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
-    // console.log(gptResults.choices?.[0]?.message?.content);
+    let gptResults;
+    try {
+      const response = await fetch("https://api.aimlapi.com/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "user",
+              content: gptQuery,
+            },
+          ],
+          max_tokens: 512,
+          stream: false,
+        }),
+      });
+      gptResults = await response.json();
+    } catch (error) {
+      console.error("Error making GPT API call:", error);
+      return;
+    }
 
-    const gptMovies = [
-      "Inception",
-      "The Matrix",
-      "Interstellar",
-      "The Dark Knight",
-      "The Godfather",
-    ];
+    const gptMovies = gptResults.choices?.[0]?.message?.content.split(",");
 
     const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
     // [Promise , Promise , Promise , Promise,Promise]
@@ -61,9 +74,9 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="pt-[10%] flex justify-center">
+    <div className="pt-[35%] md:pt-[10%] flex justify-center">
       <form
-        className="w-1/2 bg-black grid grid-cols-12 bg-opacity-90"
+        className="w-full md:w-1/2 bg-black grid grid-cols-12 bg-opacity-90"
         onSubmit={(e) => e.preventDefault()}
       >
         <input

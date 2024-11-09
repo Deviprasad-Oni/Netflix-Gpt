@@ -91,14 +91,18 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div name="viewport" content="width=device" className="absolute width">
-        <img src={BG_URL} alt="logo" />
+      <div className="absolute">
+        <img
+          className="h-screen object-cover md:w-screen md:object-contain md:h-screen lg:w-screen lg:object-cover xl:h-screen xl:w-screen xl:object cover"
+          src={BG_URL}
+          alt="logo"
+        />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className=" w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-90"
+        className="w-screen md:w-3/12 absolute p-12 bg-black my-20 md:my-24 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80"
       >
-        <h1 className="font-bold text-3xl py-4">
+        <h1 className="font-bold text-xl md:text-3xl md:py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignInForm && (
@@ -122,7 +126,6 @@ const Login = () => {
           className="p-4 my-4 w- w-full bg-gray-700"
         />
         <p className="text-red-500 font-bold text-lg py-2 ">{errorMessage}</p>
-        {/* <Link to={"/browse"}> */}
         <button
           className="p-4 my-6  bg-red-700 w-full rounded-lg"
           onClick={handleButtonClick}
@@ -130,7 +133,7 @@ const Login = () => {
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         {/* </Link> */}
-        <p className="py-4 cursor-pointer" onClick={toggleSignInForm}>
+        <p className=" md:py-4 cursor-pointer" onClick={toggleSignInForm}>
           {isSignInForm
             ? "New to Netflix? Sign Up Now"
             : "Already registered? Sign In Now."}
